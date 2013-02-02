@@ -1,4 +1,5 @@
 \documentclass[10pt, twocolumn]{article}
+\usepackage[landscape, vmargin=2cm, hmargin=2.5cm]{geometry}
 \usepackage{amsmath}
 \usepackage{setspace}
 \title{CS2100 Summary}
@@ -157,7 +158,7 @@ $A-B = A+(-B)$
 \end{itemize}
 
 \subsubsection{Floating Point Numbers}
-Consists of: \\
+Consists of:
 \begin{center}
 $\begin{array}{|c|c|c|}
 \text{Sign} & \text{Mantissa} & \text{Exponent}
@@ -172,13 +173,77 @@ $\begin{array}{|c|c|c|}
 \begin{itemize}
 \item Normalised form
 \item $0.01101 \times 2^4 \rightarrow \text{normalised} \rightarrow 0.1101 \times 2^3$
-\item $101011.0110 \times 2^{-4} \rightarrow \text{normalised} \rightarrow 0.1010110110 \times 2^2
+\item $101011.0110 \times 2^{-4} \rightarrow \text{normalised} \rightarrow 0.1010110110 \times 2^2$
+\end{itemize}
+{\bf Exponent}
+\begin{itemize}
+\item Expressed in complement or excess format
+\end{itemize}
+{\bf IEEE Standard 754 Floating Point Numbers}
+Format:
+\begin{center}
+$\begin{array}{c|c|c|c|c}
+& \text{Sign} & \text{Exponent} & \text{Mantissa} & Excess-  \\ \hline
+\text{Single (32-bits)} & 1 & 8 & 23 & 127 \\ \hline
+\text{Double (64-bits)} & 1 & 11 & 52 & 1023
+\end{array}$
+\end{center}
 
+\subsection{Decimal Codes}
+{\bf Binary Coded Decimal (BCD or 8421)}
+\begin{itemize}
+\item Digits represented by their 4-bit binary values
+\item Unused codes return error
+\end{itemize}
+{\bf Excess-3}
+\begin{itemize}
+\item Similar to BCD except with a bias value of 3
+\end{itemize}
+{\bf Biquinary}
+\begin{itemize}
+\item First two bits represent first and second five digits (01 and 10 respectively)
+\item Each subsequent bit represents the $n$th digit of the set of five
+\item Has error-detecting capabilities
+\end{itemize}
+{\bf Definitions}
+\begin{itemize}
+\item Weighted Code - \\
+Each bit has associated weight (BCD, 84-2-1, 2421, biquinary)
+\item Self-complementing - \\
+Complementary digits are also complementary to each other in code (Excess-3, 84-2-1, 2421)
+\item Sequential Code - \\
+Succeeding code value is one binary value greater than preceding code value (BCD, Excess-3)
+\end{itemize}
 
+\subsection{Gray Code}
+Single value bit change from one code value to the next.
+\subsubsection{Binary-to-Gray Conversion}
+\begin{enumerate}
+\item[1.]{Retain MSB}
+\item[2.]{From left to right, add adjacent pair of binary code bits to get next Gray code bit (discard carry)}
+\end{enumerate}
+\subsubsection{Gray-to-Binary Conversion}
+\begin{enumerate}
+\item[1.]{Retain MSB}
+\item[2.]{From left to right, add each binary code bit generated to Gray code bit in next position (discard carry)}
+\end{enumerate}
 
-
-
-
-
+\subsection{Error Detection}
+\subsubsection{Parity Bit}
+Extra bit attached (usually appended) to data.
+\begin{enumerate}
+\item[1.]{Odd Parity} \\
+Total number of 1s are odd
+\item[2.]{Even Parity}
+Total number of 1s are even
+\end{enumerate}
+Only able to detect odd number of errors. No error correction capabilities.
+\subsubsection{Hamming Distance}
+{\bf Definitions}
+\begin{itemize}
+\item Distance between two codes is the total number of bit differences.
+\item Hamming distance of a code is the minimum distance between any two code words in the code.
+\item A code with Hamming distance of $d$ can detect $d-1$ errors.
+\end{itemize}
 
 \end{document}
