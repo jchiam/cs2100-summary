@@ -1,0 +1,184 @@
+\documentclass[10pt, twocolumn]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\title{CS2100 Summary}
+
+\setlength{\columnsep}{20pt}
+
+\begin{document}
+\begin{center}
+\part*{CS2100 Summary}
+\end{center}
+\tableofcontents
+\newpage
+\onehalfspacing
+
+\section{Number Systems and Code}
+\subsection{Number Systems}
+\subsubsection{Base Conversion}
+{\bf Base-R to Decimal Conversion}
+\newline
+Sum up digits multiplied by their weights:
+\newline
+$1101.101_2 = 1\times 2^3 + 1\times 2^2 + 1\times 2^0 + 1\times 2^{-1} + 1\times 2^{-3}$ \\
+$572.6_8 = 5\times 8^2 + 7\times 8^1 + 2\times 8^0 + 6\times 8^{-1}$
+\newline
+{\bf Decimal to Binary Conversion}
+\begin{enumerate}
+\item[1.]{Sum-of-Weights Method} \\
+Determine the set of binary weights that sum up to the decimal number.
+\newline
+$9_{10} = 8+1 = 2^3+2^0 = 1001_2$ \\
+$18_{10} = 16+2 = 2^4+2^1 = 10100_2$
+\item[2.]{Repeated Division/Multiplication} \\
+For whole numbers (Division by 2) until denominator is $0$:
+\begin{center}
+$\begin{array}{c|lll}
+2 & 43 &\\
+2 & 21 & \text{rem} & 1 \leftarrow \text{LSB} \\
+2 & 10 & \text{rem} & 1 \\
+2 & 5 & \text{rem} & 0 \\
+2 & 2 & \text{rem} & 1 \\
+2 & 1 & \text{rem} & 0 \\
+  & 0 & \text{rem} & 1 \leftarrow \text{MSB}
+\end{array}$
+\end{center}
+Form binary number starting from MSB (Most Siginificant Bit):
+\begin{center}
+$43_{10} = 101011_2$
+\end{center}
+For fractional numbers (Multiplication by 2) until result is $1$:
+\begin{center}
+$\begin{array}{l|l}
+ & \text{Carry} \\ \hline
+0.3125\times 2=0.625 & 0 \leftarrow \text{MSB} \\
+0.625\times 2=1.25 & 1 \\
+0.25\times 2=0.50 & 0 \\
+0.5\times 2=1.00 & 1 \leftarrow \text{LSB}
+\end{array}$
+\end{center}
+Form binary number starting from MSB (Most Significant Bit):
+\begin{center}
+$0.3125 = 0.0101_2$
+\end{center}
+\end{enumerate}
+{\bf Binary to Octal/Hexadecimal Conversion}
+\begin{enumerate}
+\item[1.]{Binary $\rightarrow$ Octal} \\
+Partition in groups of 3 \\ 
+Whole: R to L \hspace{20pt} Fractional: L to R
+\begin{center}
+$(10\text{ }111\text{ }011\text{ }001\text{ . }101\text{ }110)_2 = (2751.56)_8$
+\end{center}
+\item[2.]{Octal $\rightarrow$ Binary} \\
+Convert each digit into 3-bit binary and concatenate.
+\item[3.]{Binary $\rightarrow$ Hexadecimal} \\
+Partition in groups of 4 \\
+Whole: R to L \hspace{20pt} Fractional: L to R
+\begin{center}
+$(101\text{ }1101\text{ }1001\text{ . }1011\text{ }1000)_2 = (5D9.B8)_{16}$
+\end{center}
+\item[4.]{Hexadecimal $\rightarrow$ Binary} \\
+Convert each digit into 4-bit binary and concatenate.
+\end{enumerate}
+
+\subsubsection{Negative Numbers}
+3 Common Representations:
+\begin{enumerate}
+\item[1.]{Sign-and-Magnitude}
+\item[2.]{1s Complement}
+\item[3.]{2s Complement}
+\end{enumerate}
+{\bf Sign-and-Magnitude $(xxx)_{sm}$}
+\begin{itemize}
+\item 1-bit sign and 7-bit magnitude
+\item Negation: \\
+Invert left most bit
+\end{itemize}
+{\bf 1s Complement $(xxx)_{1s}$}
+\newline
+Given $x$ as a $n$-bit number, its negated form in 1s complement:
+\begin{center}
+$-x = 2^n-x-1$ (calculation in decimal)
+\end{center}
+\begin{itemize}
+\item MSB still represents sign
+\item Negation: \\
+Invert all bits of positive binary form
+\end{itemize}
+{\bf 2s Complement $(xxx)_{2s}$}
+\newline
+Given $x$ as a $n$-bit number, its negated form in 2s complement:
+\begin{center}
+$-x = 2^n-x$ (calculation in decimal)
+\end{center}
+\begin{itemize}
+\item MSB still represents sign
+\item Negation: \\
+Invert all bits of positive binary form then add 1 to LSB
+\end{itemize}
+{\bf 2s Complement Addition/Subtraction}
+\begin{enumerate}
+\item[1.]{Addition $A+B$}
+\begin{itemize}
+\item Perform binary addition
+\item Ignore carry out of MSB
+\item Check for overflow (if result is opposite sign of $A$ and $B$)
+\end{itemize}
+\item[2.]{Subtraction $A-B$}
+\newline
+$A-B = A+(-B)$
+\begin{itemize}
+\item Take 2s-complement of B
+\item Add the 2s-complement of B to A
+\end{itemize}
+\end{enumerate}
+{\bf 1s Complement Addition/Subtraction}
+\begin{enumerate}
+\item[1.]{Addition $A+B$}
+\begin{itemize}
+\item Perform binary addition
+\item If there is carry out on MSB, add one to end result
+\item Check for overflow (if result is opposite sign of $A$ and $B$)
+\end{itemize}
+\item[2.]{Subtraction $A-B$}
+\newline
+$A-B = A+(-B)$
+\begin{itemize}
+\item Take 1s-complement of $B$
+\item Add the 1s-complement of $B$ to $A$.
+\end{itemize}
+\end{enumerate}
+{\bf Excess Representation}
+\begin{itemize}
+\item Given Excess-$n$ representation
+\item Add $n$ to decimal value
+\item Convert result to binary
+\end{itemize}
+
+\subsubsection{Floating Point Numbers}
+Consists of: \\
+\begin{center}
+$\begin{array}{|c|c|c|}
+\text{Sign} & \text{Mantissa} & \text{Exponent}
+\end{array}$
+\end{center}
+{\bf Sign}
+\begin{itemize}
+\item 0 for positive
+\item 1 for negative
+\end{itemize}
+{\bf Mantissa}
+\begin{itemize}
+\item Normalised form
+\item $0.01101 \times 2^4 \rightarrow \text{normalised} \rightarrow 0.1101 \times 2^3$
+\item $101011.0110 \times 2^{-4} \rightarrow \text{normalised} \rightarrow 0.1010110110 \times 2^2
+
+
+
+
+
+
+
+
+\end{document}
